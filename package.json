@@ -1,29 +1,30 @@
 {
   "name": "hubot-test-helper",
   "description": "Helper for testing hubot script",
-  "main": "./src/index.js",
-  "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register test",
-    "autotest": "mocha --compilers coffee:coffee-script/register test -w",
-    "semantic-release": "semantic-release"
-  },
-  "keywords": [
-    "hubot"
-  ],
-  "dependencies": {
-    "hubot": ">=3.0.0 <10 || 0.0.0-development"
-  },
+  "keywords": [],
   "devDependencies": {
-    "chai": "latest",
-    "co": "latest",
-    "mocha": "latest",
-    "coffee-script": "latest",
-    "semantic-release": "latest"
+    "@babel/preset-env": "^7.25.4",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.13",
+    "@types/node-fetch": "^2.6.11",
+    "axios": "^1.7.7",
+    "jest": "^29.7.0",
+    "node-fetch": "^3.3.2",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
   },
-  "author": "Fumiaki MATSUSHIMA",
+  "author": "Guillermo Gutierrez Almazor",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mtsmfm/hubot-test-helper"
-  }
+    "url": "https://github.com/ggalmazor/hubot-test-helper"
+  },
+  "dependencies": {
+    "hubot": "^11.3.0"
+  },
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "type": "module"
 }
