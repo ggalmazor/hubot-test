@@ -1,6 +1,6 @@
 {
-  "name": "hubot-test-helper",
-  "description": "Helper for testing hubot script",
+  "name": "hubot-test-ts",
+  "description": "Helper for testing hubot scripts",
   "keywords": [],
   "devDependencies": {
     "@babel/preset-env": "^7.25.4",
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ggalmazor/hubot-test-helper"
+    "url": "https://github.com/ggalmazor/hubot-test-ts"
   },
   "dependencies": {
     "hubot": "^11.3.0"
