@@ -1,6 +1,6 @@
 {
   "name": "hubot-test-ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Helper for testing hubot scripts",
   "keywords": [],
   "author": "Guillermo Gutierrez Almazor",
