@@ -1,5 +1,4 @@
 import {Adapter, EnterMessage, LeaveMessage, Robot, TextMessage, User} from "hubot";
-import {v4 as uuidv4} from 'uuid'
 
 function userAt(user, room) {
   const options = Object.assign({}, user)
@@ -9,10 +8,10 @@ function userAt(user, room) {
   return new User(user.id, options);
 }
 
-class TestAdapter extends Adapter {
+export class TestAdapter extends Adapter {
   constructor(robot) {
     super(robot);
-    this.user = new User(robot.name);
+    this.name = 'TestAdapter';
     this.messages = {};
   }
 
@@ -20,31 +19,42 @@ class TestAdapter extends Adapter {
     return this.messages[room] || [];
   }
 
-  async send(envelope, ...strings) {
-    const newMessages = strings.map((string) => [this.user.name, string]);
-    this.messages[envelope.room] = (this.messages[envelope.room] || []).concat(newMessages);
-    return null;
+  async send(envelope, ...messages) {
+    await this.store(this.robot.name, envelope.room, ...messages);
   }
 
-  async reply(envelope, ...strings) {
-    const replies = strings.map((string) => `@${envelope.user.name}: ${string}`)
-    return this.send({room: envelope.room}, ...replies)
+  async reply(envelope, ...messages) {
+    await this.store(this.robot.name, envelope.room, ...messages.map(string => `@${envelope.user.name}: ${string}`));
   }
 
   async topic(envelope, ...strings) {
-    // No implementation. Specific for Campfire
   }
 
   async play(envelope, ...strings) {
-    // No implementation. Specific for Campfire
   }
 
-  async run() {
-    // Nothing to do here
+  run() {
+    this.emit('connected');
   }
 
-  injectMessage(user, room, message) {
-    this.messages[room] = (this.messages[room] || []).concat([[user.name, message]]);
+  close() {
+    this.emit('closed');
+  }
+
+  async say(user, room, ...messages) {
+    this.messages[room] = (this.messages[room] ||= []).concat(messages.map(message => [user.name, message]));
+    user.room = room;
+    await Promise.all(messages.map((message) => {
+      return this.robot.receive(new TextMessage(user, message));
+    }));
+  }
+
+  async store(userName, room, ...messages) {
+    this.messages[room] = (this.messages[room] ||= []).concat(messages.map(message => [userName, message]));
+  }
+
+  static async use(robot) {
+    return new TestAdapter(robot);
   }
 }
 
@@ -54,9 +64,9 @@ export class Helper {
   }
 
   async init(httpd = false) {
-    this.robot = new Robot("test", httpd, 'Hubot', 'hubot');
-    this.adapter = new TestAdapter(this.robot);
-    this.robot.adapter = this.adapter;
+    this.robot = new Robot("TestAdapter", httpd, 'Hubot', 'hubot');
+    this.robot.adapter = TestAdapter;
+    await this.robot.loadAdapter()
 
     if (httpd)
       await this.robot.run();
@@ -73,12 +83,11 @@ export class Helper {
   }
 
   user(name, alias = null) {
-    return new User(alias || name.toLowerCase(), {name})
+    return this.robot.brain.userForId(alias || name.toLowerCase(), {name: name});
   }
 
   async sendMessage(user, room, message) {
-    await this.adapter.injectMessage(user, room, message);
-    return await this.robot.receive(new TextMessage(userAt(user, room), message, uuidv4()));
+    await this.robot.adapter.say(user, room, message);
   }
 
   async enter(user, room) {
@@ -94,7 +103,7 @@ export class Helper {
   }
 
   messagesAt(room) {
-    return this.adapter.messagesAt(room);
+    return this.robot.adapter.messagesAt(room);
   }
 
   on(event, listener) {
