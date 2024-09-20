@@ -2,6 +2,8 @@
 
 ![CI](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
 
+<a href="https://www.buymeacoffee.com/ggalmazor" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 This is a library to help you test your [Hubot](https://github.com/hubotio/hubot) scripts, based
 on [mtsmfm/hubot-test-helper](https://github.com/mtsmfm/hubot-test-helper).
 
