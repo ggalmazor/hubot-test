@@ -9,7 +9,7 @@ on [mtsmfm/hubot-test-helper](https://github.com/mtsmfm/hubot-test-helper).
 
 ## Install
 
-This package is published at [npmjs.org](https://www.npmjs.com). Install it with:
+This package is published at [npmjs.org](https://www.npmjs.com/package/hubot-test). Install it with:
 
 ```shell
 npm install --save-dev hubot-test
