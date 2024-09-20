@@ -15,7 +15,6 @@ class TestAdapter extends Adapter {
     this.messages = {};
   }
 
-
   messagesAt(room) {
     return this.messages[room] || [];
   }
