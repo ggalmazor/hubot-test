@@ -1,19 +1,20 @@
-import {Adapter, EnterMessage, LeaveMessage, Robot, TextMessage, User} from "hubot";
+import { Adapter, EnterMessage, LeaveMessage, Robot, TextMessage, User } from 'hubot';
 
 function userAt(user, room) {
-  const options = Object.assign({}, user)
+  const options = Object.assign({}, user);
   delete options.id;
   delete options._getRobot;
   options.room = room;
   return new User(user.id, options);
 }
 
-export class TestAdapter extends Adapter {
+class TestAdapter extends Adapter {
   constructor(robot) {
     super(robot);
     this.name = 'TestAdapter';
     this.messages = {};
   }
+
 
   messagesAt(room) {
     return this.messages[room] || [];
@@ -24,13 +25,7 @@ export class TestAdapter extends Adapter {
   }
 
   async reply(envelope, ...messages) {
-    await this.store(this.robot.name, envelope.room, ...messages.map(string => `@${envelope.user.name}: ${string}`));
-  }
-
-  async topic(envelope, ...strings) {
-  }
-
-  async play(envelope, ...strings) {
+    await this.store(this.robot.name, envelope.room, ...messages.map((string) => `@${envelope.user.name}: ${string}`));
   }
 
   run() {
@@ -42,15 +37,17 @@ export class TestAdapter extends Adapter {
   }
 
   async say(user, room, ...messages) {
-    this.messages[room] = (this.messages[room] ||= []).concat(messages.map(message => [user.name, message]));
+    this.messages[room] = (this.messages[room] ||= []).concat(messages.map((message) => [user.name, message]));
     user.room = room;
-    await Promise.all(messages.map((message) => {
-      return this.robot.receive(new TextMessage(user, message));
-    }));
+    await Promise.all(
+      messages.map((message) => {
+        return this.robot.receive(new TextMessage(user, message));
+      }),
+    );
   }
 
   async store(userName, room, ...messages) {
-    this.messages[room] = (this.messages[room] ||= []).concat(messages.map(message => [userName, message]));
+    this.messages[room] = (this.messages[room] ||= []).concat(messages.map((message) => [userName, message]));
   }
 
   static async use(robot) {
@@ -58,32 +55,29 @@ export class TestAdapter extends Adapter {
   }
 }
 
-export class Helper {
+export default class Helper {
   constructor(...scripts) {
     this.scripts = scripts;
   }
 
   async init(httpd = false) {
-    this.robot = new Robot("TestAdapter", httpd, 'Hubot', 'hubot');
+    this.robot = new Robot('TestAdapter', httpd, 'Hubot', 'hubot');
     this.robot.adapter = TestAdapter;
-    await this.robot.loadAdapter()
+    await this.robot.loadAdapter();
 
-    if (httpd)
-      await this.robot.run();
+    if (httpd) await this.robot.run();
 
     this.scripts.forEach((script) => script(this.robot));
     this.robot.brain.emit('loaded');
   }
 
   async destroy() {
-    if (this.robot.server)
-      return new Promise((resolve, _reject) => this.robot.server.close(() => resolve(null)));
-    else
-      return Promise.resolve(null);
+    if (this.robot.server) return new Promise((resolve) => this.robot.server.close(() => resolve(null)));
+    else return Promise.resolve(null);
   }
 
   user(name, alias = null) {
-    return this.robot.brain.userForId(alias || name.toLowerCase(), {name: name});
+    return this.robot.brain.userForId(alias || name.toLowerCase(), { name: name });
   }
 
   async sendMessage(user, room, message) {
@@ -110,4 +104,3 @@ export class Helper {
     this.robot.on(event, listener);
   }
 }
-

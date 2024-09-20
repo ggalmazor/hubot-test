@@ -1,6 +1,6 @@
 {
   "name": "hubot-test",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Helper for testing hubot scripts",
   "keywords": [],
   "author": "Guillermo Gutierrez Almazor",
@@ -11,17 +11,30 @@
   },
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "linter": "eslint .",
+    "linter-fix": "eslint --fix .",
+    "format-fix": "prettier -w '*.{js,json}' '{src,tests}/**/*.js'",
+    "format-check": "prettier --check '*.{js,json}' '{src,tests}/**/*.js'"
   },
   "main": "src/index.js",
   "module": "src/index.js",
-  "files": ["src/index.js"],
+  "files": [
+    "src/index.js"
+  ],
   "dependencies": {
     "hubot": "^11.3.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@types/jest": "^29.5.13",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
     "jest": "^29.7.0",
-    "node-fetch": "^3.3.2",
+    "prettier": "^3.3.3",
     "uuid": "^10.0.0"
   }
 }
