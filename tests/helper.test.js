@@ -27,9 +27,15 @@ describe('bye', function () {
       await helper.sendMessage(alice, 'room', '@hubot repeat foo');
       await helper.sendMessage(alice, 'room', '@hubot repeat bar');
 
-      expect(helper.messagesAt('room', alice.name)).toEqual(['@hubot repeat foo', '@hubot repeat bar']);
+      expect(helper.messagesAt('room', alice.name)).toEqual([
+        ['Alice', '@hubot repeat foo'],
+        ['Alice', '@hubot repeat bar']
+      ]);
 
-      expect(helper.messagesAt('room', 'Hubot')).toEqual(['@Alice: foo', '@Alice: bar']);
+      expect(helper.messagesAt('room', 'Hubot')).toEqual([
+        ['Hubot', '@Alice: foo'],
+        ['Hubot', '@Alice: bar']
+      ]);
     });
   });
 });
