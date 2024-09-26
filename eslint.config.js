@@ -18,7 +18,7 @@ export default [
     },
   },
   {
-    ignores: ["out", "coverage"]
+    ignores: ['out', 'coverage'],
   },
   pluginJs.configs.recommended,
   eslintConfigPrettier,
