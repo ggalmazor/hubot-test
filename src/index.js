@@ -95,8 +95,13 @@ export default class Helper {
     this.robot.emit(eventName, ...args);
   }
 
-  messagesAt(room) {
-    return this.robot.adapter.messagesAt(room);
+  messagesAt(room, username) {
+    if (username === undefined) return this.robot.adapter.messagesAt(room);
+
+    return this.robot.adapter
+      .messagesAt(room)
+      .filter(([u]) => u === username)
+      .map(([, message]) => message);
   }
 
   on(event, listener) {
