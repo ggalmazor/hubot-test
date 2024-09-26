@@ -5,6 +5,8 @@
 This is a library to help you test your [Hubot](https://github.com/hubotio/hubot) scripts, based
 on [mtsmfm/hubot-test-helper](https://github.com/mtsmfm/hubot-test-helper).
 
+Check out the documentation at [ggalmazor.com/hubot-test](https://ggalmazor.com/hubot-test)
+
 ## Install
 
 This package is published at [npmjs.org](https://www.npmjs.com/package/hubot-test). Install it with:
