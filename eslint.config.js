@@ -17,6 +17,9 @@ export default [
       'jest/prefer-expect-assertions': 'off',
     },
   },
+  {
+    ignores: ["out", "coverage"]
+  },
   pluginJs.configs.recommended,
   eslintConfigPrettier,
 ];
