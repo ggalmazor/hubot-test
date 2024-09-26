@@ -1,6 +1,6 @@
 {
   "name": "hubot-test",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Helper for testing hubot scripts",
   "keywords": [],
   "author": "Guillermo Gutierrez Almazor",
@@ -9,6 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/ggalmazor/hubot-test.git"
   },
+  "homepage": "https://ggalmazor.com/hubot-test",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
