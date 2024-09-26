@@ -4,6 +4,10 @@ This project uses [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## main
 
+## 1.0.13
+
+- Housekeeping release
+
 ## 1.0.12
 
 - Housekeeping release
