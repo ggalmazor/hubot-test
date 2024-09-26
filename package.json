@@ -16,8 +16,9 @@
     "linter-fix": "eslint --fix .",
     "format-fix": "prettier -w '*.{js,json}' '{src,tests}/**/*.js'",
     "format-check": "prettier --check '*.{js,json}' '{src,tests}/**/*.js'",
-    "docs-build": "jsdoc src/index.js -c jsdoc.conf.json -t node_modules/ink-docstrap/template -R README.md",
-    "docs-dev": "http-server out & watch 'npm run docs-build' src"
+    "docs-build": "jsdoc src/index.js -c jsdoc.conf.json -t node_modules/ink-docstrap/template -R README.md -d _site",
+    "docs-build-watch": "watch 'npm run docs-build' src",
+    "docs-dev": "http-server _site"
   },
   "main": "src/index.js",
   "module": "src/index.js",
