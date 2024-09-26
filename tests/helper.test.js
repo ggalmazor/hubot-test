@@ -29,12 +29,12 @@ describe('bye', function () {
 
       expect(helper.messagesAt('room', alice.name)).toEqual([
         ['Alice', '@hubot repeat foo'],
-        ['Alice', '@hubot repeat bar']
+        ['Alice', '@hubot repeat bar'],
       ]);
 
       expect(helper.messagesAt('room', 'Hubot')).toEqual([
         ['Hubot', '@Alice: foo'],
-        ['Hubot', '@Alice: bar']
+        ['Hubot', '@Alice: bar'],
       ]);
     });
   });
